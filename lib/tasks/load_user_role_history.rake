@@ -1,17 +1,24 @@
-require 'active_record/fixtures'
-require File.expand_path(File.join(%w[.. cmi fixtures_patch]), File.dirname(__FILE__))
-
 desc 'Load CMI user role history. (db/fixtures/history_user_profiles.csv)'
 
 namespace :cmi do
   task :load_user_role_history => :environment do
-    Fixtures.create_fixtures(File.join(File.dirname(__FILE__), %w[.. .. db fixtures]), 'history_user_profiles')
+    reader = File.open(File.join(%w[db fixtures], 'history_user_profiles.csv')).read
 
-    User.all.each do |u|
+    reader.each_line do |line|
+      if line != reader.lines.first
+        hpc = line.split(",")
+        HistoryProfilesCost.create(profile: hpc[2], user_id: hpc[1], created_on: hpc[3].to_date)
+      end
+    end
+
+    User.find_each do |u|
       h = HistoryUserProfile.find(:first,
-                                  :conditions => { :user_id => u.id},
+                                  :conditions => {:user_id => u.id},
                                   :order => 'created_on DESC')
-      u.role = h.profile unless h.nil?
+      unless h.nil?
+        u.role = h.profile
+        u.save!
+      end
     end
   end
 end

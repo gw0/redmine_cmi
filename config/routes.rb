@@ -1,6 +1,6 @@
 RedmineApp::Application.routes.draw do
   resources :checkpoints, :path_prefix => '/projects/:project_id/metrics' do
-    :member do
+    member do
       post :new_journal
       post :edit_journal
       get :edit_journal
@@ -9,7 +9,7 @@ RedmineApp::Application.routes.draw do
   end
 
   resources :expenditures, :path_prefix => '/projects/:project_id/metrics' do
-    :member do
+    member do
       post :new_journal
       post :edit_journal
       get :edit_journal

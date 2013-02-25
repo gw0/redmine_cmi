@@ -1,5 +1,4 @@
 require_dependency 'users_helper'
-require 'dispatcher'
 
 # Patches Redmine's ApplicationController dinamically. Redefines methods wich
 # send error responses to clients
@@ -34,6 +33,6 @@ module CMI
   end
 end
 
-Dispatcher.to_prepare do
+Rails.configuration.to_prepare do
   UsersHelper.send(:include, CMI::UsersHelperPatch)
 end

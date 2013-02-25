@@ -1,5 +1,3 @@
-require 'dispatcher'
-
 # Patches Redmine's Issue dynamically.  Adds relationships
 # Issue +has_one+ to Incident and ImprovementAction
 module CMI
@@ -51,7 +49,7 @@ module CMI
   end
 end
 
-Dispatcher.to_prepare do
+Rails.configuration.to_prepare do
   require_dependency 'principal'
   require_dependency 'user'
   User.send(:include, CMI::UserPatch)

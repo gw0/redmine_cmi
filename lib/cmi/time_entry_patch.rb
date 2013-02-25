@@ -1,5 +1,4 @@
 require_dependency 'time_entry'
-require 'dispatcher'
 
 # Patches Redmine's TimeEntry dinamically. Adds callbacks to save the role and
 # cost added by the plugin.
@@ -30,6 +29,6 @@ module CMI
   end
 end
 
-Dispatcher.to_prepare do
+Rails.configuration.to_prepare do
   TimeEntry.send(:include, CMI::TimeEntryPatch)
 end

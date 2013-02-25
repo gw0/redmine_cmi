@@ -1,5 +1,4 @@
 require_dependency 'project'
-require 'dispatcher'
 
 module CMI
   module ProjectPatch
@@ -42,6 +41,6 @@ module CMI
   end
 end
 
-Dispatcher.to_prepare do
+Rails.configuration.to_prepare do
   Project.send(:include, CMI::ProjectPatch)
 end

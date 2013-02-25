@@ -1,5 +1,4 @@
 require_dependency 'journal_observer'
-require 'dispatcher'
 
 module CMI
   module JournalObserverPatch
@@ -28,6 +27,6 @@ module CMI
   end
 end
 
-Dispatcher.to_prepare do
+Rails.configuration.to_prepare do
   JournalObserver.send(:include, CMI::JournalObserverPatch)
 end

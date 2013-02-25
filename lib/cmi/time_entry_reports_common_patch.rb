@@ -1,6 +1,5 @@
-require_dependency 'time_entry_reports_controller' if File.exists?("#{RAILS_ROOT}/app/controllers/time_entry_reports_controller.rb")
-require_dependency 'timelog_controller' if File.exists?("#{RAILS_ROOT}/app/controllers/timelog_controller.rb")
-require 'dispatcher'
+require_dependency 'time_entry_reports_controller' if File.exists?("#{Rails.root}/app/controllers/time_entry_reports_controller.rb")
+require_dependency 'timelog_controller' if File.exists?("#{Rails.root}/app/controllers/timelog_controller.rb")
 
 # Patches Redmine's TimeEntryReportsController dinamically. Adds an option "Role" to the list of available criterias
 # for the time entries report
@@ -28,9 +27,9 @@ module CMI
   end
 end
 
-Dispatcher.to_prepare do
+Rails.configuration.to_prepare do
   # For Redmine >= 1.1.0
-  TimeEntryReportsController.send(:include, CMI::TimeEntryReportsCommonPatch) if File.exists?("#{RAILS_ROOT}/app/controllers/time_entry_reports_controller.rb")
+  TimeEntryReportsController.send(:include, CMI::TimeEntryReportsCommonPatch) if File.exists?("#{Rails.root}/app/controllers/time_entry_reports_controller.rb")
   # For Redmine < 1.1.0
-  TimelogController.send(:include, CMI::TimeEntryReportsCommonPatch) if File.exists?("#{RAILS_ROOT}/app/controllers/timelog_controller.rb")
+  TimelogController.send(:include, CMI::TimeEntryReportsCommonPatch) if File.exists?("#{Rails.root}/app/controllers/timelog_controller.rb")
 end

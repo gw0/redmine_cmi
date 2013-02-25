@@ -48,13 +48,13 @@ namespace :cmi do
                                :group => project.custom_value_for(project_group_field).value)
       end
 
-      project_group_field.destroy
-      project_scheduled_start_date_field.destroy
-      project_scheduled_finish_date_field.destroy
-      project_scheduled_qa_meetings_field.destroy
-      project_total_income_field.destroy
-      project_actual_start_date_field.destroy
-      project_scheduled_role_effort_fields.each_value { |field| field.destroy }
+      project_group_field.destroy if project_group_field.present?
+      project_scheduled_start_date_field.destroy if project_scheduled_start_date_field.present?
+      project_scheduled_finish_date_field.destroy if project_scheduled_finish_date_field.present?
+      project_scheduled_qa_meetings_field.destroy if project_scheduled_qa_meetings_field.present?
+      project_total_income_field.destroy if project_total_income_field.present?
+      project_actual_start_date_field.destroy if project_actual_start_date_field.present?
+      project_scheduled_role_effort_fields.each_value { |field| field.destroy if field.present? }
 
       # Reports
       unless report_tracker.nil?

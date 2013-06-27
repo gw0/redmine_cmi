@@ -25,6 +25,6 @@ module MetricsHelper
   def pie_graph(data, labels, opts = {})
     t = data.join(',')
     l = labels.join('|')
-    "<img src=\"http://chart.apis.google.com/chart?cht=p3&chs=220x50&chd=t:#{t}&chl=#{l}\" />"
+    "<img src=\"http://chart.apis.google.com/chart?cht=p3&chs=220x50&chd=t:#{t}&chl=#{l}\" />".html_safe
   end
 end
